@@ -1,23 +1,23 @@
 const express = require('express')
-
+const handlebars = require('express-handlebars')
 const app = express()
 
 app.use(express.static('public'))
 
+app.engine('handlebars', handlebars.engine());
+app.set('view engine', 'handlebars');
+app.set('views', __dirname + '\\views');
 // route: tuyến đường
 app.get('/', function (req, res) {
-  res.send(`
-    <link rel="stylesheet" href="/css/app.css">
-    <h2>HOME PAGE</h2>
-  `)
+  try {
+    res.render('home')
+  } catch (error) {
+    console.log("error")
+  }
 })
 
 app.get('/news', function (req, res) {
-    res.send(`
-    <link rel="stylesheet" href="/css/app.css">
-    <h1>NEWS PAGE</h1>
-    <h2>TRÔN TRÔN VN</h2>
-    `)
+    res.render('news')
   })
 
 app.listen(3000, () => {
